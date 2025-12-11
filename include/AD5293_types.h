@@ -43,8 +43,8 @@ typedef enum
 
 typedef enum
 {
-    AD5293_WRPT_EN = 0,
-    AD5293_WRPT_DIS = 1,
+    AD5293_WP_ENABLE = 0,
+    AD5293_WP_DISABLE = 1,
 } AD5293_WriteProtect_t;
 
 typedef enum
@@ -59,6 +59,12 @@ typedef enum
     AD5293_TYPE_50K,
     AD5293_TYPE_100K,
 } AD5293_type_t;
+
+typedef enum
+{
+    AD5293_PWR_NORMAL,
+    AD5293_PWR_DOWN,
+} AD5293_Pwr_t;
 
 typedef int (*AD5293_SPITransmit_t)(uint8_t *data, size_t len);
 

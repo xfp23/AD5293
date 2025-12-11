@@ -113,6 +113,14 @@ extern AD5293_Status_t AD5293_HardwareReset(AD5293_Handle_t handle);
  */
 extern AD5293_Status_t AD5293_SoftWareReset(AD5293_Handle_t handle);
 
+/**
+ * @brief Perform a shutdown of the AD5293
+ * Sends the SHUTDOWN command via SPI, setting the dev poweroff.
+ * @param handle AD5293 device handle
+ * @return AD5293_Status_t tatus of the AD5293 Shutdown
+ */
+extern AD5293_Status_t AD5293_SetPower(AD5293_Handle_t handle,AD5293_Pwr_t pwr);
+
 #ifdef __cplusplus
 }
 #endif

@@ -133,6 +133,26 @@ AD5293_Status_t AD5293_HardwareReset(AD5293_Handle_t handle);
 * **返回值：** `AD5293_Status_t`
 
 ---
+好的，这里是新增 API 的 **中文文档部分**：
+
+---
+
+### 关机 / 电源控制
+
+```c
+AD5293_Status_t AD5293_SetPower(AD5293_Handle_t handle, AD5293_Pwr_t pwr);
+```
+
+* **描述:** 将器件置于关机或正常工作模式，通过 D0 位控制电源状态。
+
+* **参数:**
+
+  * `handle` : 设备句柄。
+  * `pwr` : `AD5293_Pwr_t` 枚举类型，选择关机或正常模式。
+
+* **返回值:** `AD5293_Status_t`
+
+---
 
 ### 反初始化
 

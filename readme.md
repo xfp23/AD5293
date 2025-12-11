@@ -134,6 +134,23 @@ AD5293_Status_t AD5293_HardwareReset(AD5293_Handle_t handle);
 
 ---
 
+### Shutdown / Power Down
+
+```c
+AD5293_Status_t AD5293_SetPower(AD5293_Handle_t handle, AD5293_Pwr_t pwr);
+```
+
+* **Description:** Put the device into shutdown or normal operation mode. Controls power down via D0 bit.
+
+* **Parameters:**
+
+  * `handle` : Device handle.
+  * `pwr` : `AD5293_Pwr_t` enum, selects shutdown or normal mode.
+
+* **Returns:** `AD5293_Status_t`
+
+---
+
 ### De-initialize
 
 ```c

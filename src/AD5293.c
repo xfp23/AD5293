@@ -178,3 +178,17 @@ AD5293_Status_t AD5293_DeInit(AD5293_Handle_t *handle)
 
     return AD5293_OK;
 }
+
+AD5293_Status_t AD5293_SetPower(AD5293_Handle_t handle,AD5293_Pwr_t pwr)
+{
+    __AD5293_CHECKPARAM(handle);
+
+    AD5293_Frame_t frame = {0};
+    frame.bits.command = AD5293_PWRDN;
+    frame.bits.value = (uint8_t)pwr; // D0位
+    handle->cs(0);
+    handle->Writebyte(frame.raw,2);
+    handle->cs(1);
+
+    return AD5293_OK;
+}
