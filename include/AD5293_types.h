@@ -13,6 +13,7 @@
 
 #include "stdint.h"
 #include "stdbool.h"
+#include "stddef.h"
 #include "AD5293_conf.h"
 
 #ifdef __cplusplus
@@ -92,7 +93,9 @@ typedef struct
 {
     AD5293_SPITransmit_t trans_func;
     AD5293_SPIReveive_t recv_func;
+#if AD5293_USE_CS
     AD5293_GPIOActive_t cs_func;
+#endif
 #if AD5293_USE_HW_RESET
     AD5293_HardWareReset_t reset_func;
 #endif
@@ -103,7 +106,9 @@ typedef struct
 {
     AD5293_SPITransmit_t Writebyte;
     AD5293_SPIReveive_t Readbyte;
+#if AD5293_USE_CS
     AD5293_GPIOActive_t cs;
+#endif
 #if AD5293_USE_HW_RESET
     AD5293_HardWareReset_t reset;
 #endif

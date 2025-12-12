@@ -69,7 +69,7 @@ extern AD5293_Status_t AD5293_WritePortect(AD5293_Handle_t handle, AD5293_WriteP
  * @param resistance Desired resistance in Ohms (capped by RAB)
  * @return AD5293_Status_t Status of the operation
  */
-extern AD5293_Status_t AD5293_SetResistance(AD5293_Handle_t handle, uint16_t resistance);
+extern AD5293_Status_t AD5293_SetResistance(AD5293_Handle_t handle, uint32_t resistance);
 
 /**
  * @brief Get the actual output resistance of the AD5293
@@ -80,7 +80,7 @@ extern AD5293_Status_t AD5293_SetResistance(AD5293_Handle_t handle, uint16_t res
  * @param buffer Pointer to a uint16_t variable to store resistance
  * @return AD5293_Status_t Status of the operation
  */
-extern AD5293_Status_t AD5293_GetResistance(AD5293_Handle_t handle, uint16_t *buffer);
+extern AD5293_Status_t AD5293_GetResistance(AD5293_Handle_t handle, uint32_t *buffer);
 
 /**
  * @brief De-initialize the AD5293 handle and free resources

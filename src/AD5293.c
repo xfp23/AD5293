@@ -6,7 +6,9 @@ AD5293_Status_t AD5293_Init(AD5293_Handle_t *handle, AD5293_Conf_t *conf)
 {
     __AD5293_CHECKPARAM(handle);
     __AD5293_CHECKPARAM(conf);
+#if AD5293_USE_CS
     __AD5293_CHECKPARAM(conf->cs_func);
+#endif
     __AD5293_CHECKPARAM(conf->trans_func);
     __AD5293_CHECKPARAM(conf->recv_func);
 #if AD5293_USE_HW_RESET
@@ -21,8 +23,10 @@ AD5293_Status_t AD5293_Init(AD5293_Handle_t *handle, AD5293_Conf_t *conf)
     // 注册API
     obj->Readbyte = conf->recv_func;
     obj->Writebyte = conf->trans_func;
+#if AD5293_USE_CS
     obj->cs = conf->cs_func;
-    obj->reset = conf->reset_func;
+#endif
+//    obj->reset = conf->reset_func;
 
     switch (conf->type)
     {
@@ -41,7 +45,7 @@ AD5293_Status_t AD5293_Init(AD5293_Handle_t *handle, AD5293_Conf_t *conf)
 
 #if AD5293_USE_HW_RESET
     obj->reset();
-#elif
+#else
     AD5293_SoftWareReset(obj);
 #endif
     *handle = obj;
@@ -56,11 +60,15 @@ AD5293_Status_t AD5293_ReadRDAC(AD5293_Handle_t handle, uint16_t *buffer)
 
     AD5293_Frame_t frame = {0};
     frame.bits.command = AD5293_RD_RDAC;
+#if AD5293_USE_CS
     handle->cs(0);
+#endif
     handle->Writebyte(frame.raw, 2); // 写入2字节
 
     handle->Readbyte(frame.raw, 2); // 读取2字节
+#if AD5293_USE_CS
     handle->cs(1);                  // 片选
+#endif
 
     *buffer = frame.bits.value;
     return AD5293_OK;
@@ -79,11 +87,15 @@ AD5293_Status_t AD5293_WriteRDAC(AD5293_Handle_t handle, uint16_t buffer)
 
     frame.bits.value = buffer;
 
+#if AD5293_USE_CS
     handle->cs(0); // 拉低
+#endif
 
     handle->Writebyte(frame.raw, 2);
 
+#if AD5293_USE_CS
     handle->cs(1); // 拉高
+#endif
 
     return AD5293_OK;
 }
@@ -95,10 +107,14 @@ AD5293_Status_t AD5293_WritePortect(AD5293_Handle_t handle, AD5293_WriteProtect_
     frame.bits.command = AD5293_WR_CTRL;
     frame.bits.value = (((uint8_t)en << 1) | ((uint8_t)mode << 2));
 
+#if AD5293_USE_CS
     handle->cs(0);
+#endif
 
     handle->Writebyte(frame.raw, 2);
+#if AD5293_USE_CS
     handle->cs(1);
+#endif
 
     return AD5293_OK;
 }
@@ -109,10 +125,14 @@ AD5293_Status_t AD5293_SoftWareReset(AD5293_Handle_t handle)
     AD5293_Frame_t frame = {0};
     frame.bits.command = AD5293_RESET;
 
+#if AD5293_USE_CS
     handle->cs(0);
+#endif
 
     handle->Writebyte(frame.raw, 2);
+#if AD5293_USE_CS
     handle->cs(1);
+#endif
 
     return AD5293_OK;
 }
@@ -128,7 +148,7 @@ AD5293_Status_t AD5293_HardwareReset(AD5293_Handle_t handle)
 }
 #endif
 
-AD5293_Status_t AD5293_SetResistance(AD5293_Handle_t handle, uint16_t resistance)
+AD5293_Status_t AD5293_SetResistance(AD5293_Handle_t handle, uint32_t resistance)
 {
     __AD5293_CHECKPARAM(handle);
 
@@ -146,7 +166,7 @@ AD5293_Status_t AD5293_SetResistance(AD5293_Handle_t handle, uint16_t resistance
     return AD5293_WriteRDAC(handle, (uint16_t)code);
 }
 
-AD5293_Status_t AD5293_GetResistance(AD5293_Handle_t handle, uint16_t *buffer)
+AD5293_Status_t AD5293_GetResistance(AD5293_Handle_t handle, uint32_t *buffer)
 {
     __AD5293_CHECKPARAM(handle);
     __AD5293_CHECKPARAM(buffer);
@@ -186,9 +206,13 @@ AD5293_Status_t AD5293_SetPower(AD5293_Handle_t handle,AD5293_Pwr_t pwr)
     AD5293_Frame_t frame = {0};
     frame.bits.command = AD5293_PWRDN;
     frame.bits.value = (uint8_t)pwr; // D0位
+#if AD5293_USE_CS
     handle->cs(0);
+#endif
     handle->Writebyte(frame.raw,2);
+#if AD5293_USE_CS
     handle->cs(1);
+#endif
 
     return AD5293_OK;
 }

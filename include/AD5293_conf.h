@@ -30,20 +30,22 @@ extern "C" {
  * - Mode 2: CPOL = 1, CPHA = 0
  * - Mode 3: CPOL = 1, CPHA = 1
  */
-#define AD5293_SPI_MODE      /* Documentation only, see your SPI driver */
+#define AD5293_SPI_MODE   2   /* Documentation only, see your SPI driver */
 
 /**
  * SPI clock speed (documentation only)
  * Example: 1 MHz ~ 5 MHz depending on system
  */
-#define AD5293_SPI_CLOCK     /* Documentation only */
+#define AD5293_SPI_CLOCK  5000000   /* Documentation only */
 
 /**
  * Hardware Reset enable/disable
  * 1: use HW reset pin
  * 0: do not use HW reset
  */
-#define AD5293_USE_HW_RESET   1  /* Active in code */
+#define AD5293_USE_HW_RESET   0  /* Active in code */
+
+#define AD5293_USE_CS 0         /* Active in CS code */
 
 #ifdef __cplusplus
 }
